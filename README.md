@@ -1,7 +1,7 @@
 # Agent-Based Methodology for the Detection, Attribution, and Controlled De-anonymization of Cyber Threat Actors in Dynamic OSINT Collections
 
 **Research Repository**
-
+![Overall architecture of the methodology](figures/Overall_architecture_of_the_methodology.png)
 This repository presents an explainable agent-based methodology for transforming dynamic multilingual OSINT collections into structured cyber threat intelligence through automatic AgentFlow workflow generation, adaptive virtual expert swarms, Retrieval-Augmented Generation (RAG), semantic canonicalization, attribution control, and dynamic semantic graph construction.
 
 Unlike conventional prompt engineering or predefined multi-agent systems, the proposed methodology automatically transforms a declarative analytical prompt into an executable AgentFlow scenario, generates the required set of specialized agents, performs repeated RAG-based analyses, canonicalizes extracted entities and attribution statements, aggregates evidence using linguo-statistical methods, and produces an explainable semantic representation of cyber threat actors and their relationships.
