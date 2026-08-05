@@ -1,0 +1,27 @@
+**Prompt:** Execute the following prompt. Use `RAG2-eng.docx` as the input corpus for analysis.
+
+## Listing 1. Primary Analytical Prompt
+
+**Objective.** Perform a comprehensive analysis of a dynamic OSINT document collection concerning cyber incidents, cyber threat actor activity, and related information reports in order to construct an explainable semantic model of cyber threat actors, their attribution, and controlled de-anonymization.
+
+The analysis must:
+
+1. Identify all explicit and implicit references to cyber threat actors, regardless of the language of the documents or the manner in which the actors are described.
+
+2. Consolidate alternative names, aliases, transliterations, abbreviations, multilingual variants, and descriptive designations that refer to the same actor.
+
+3. Distinguish among entity types and prevent the conflation of individuals, hacker groups, organizations, states, campaigns, cyber incidents, malware, tools, infrastructure, and tactics, techniques, and procedures (TTPs).
+
+4. For each identified actor, determine the associated cyber incidents, attack targets, tools used, malware, TTPs, organizational and state affiliations, and possible participants.
+
+5. For each attribution statement, determine its epistemic status by distinguishing among confirmed facts, official attributions, court materials, claims of responsibility, expert assessments, journalistic interpretations, hypotheses, and denials.
+
+6. Separate independent information reports from repeated publications, reprints, and derivative materials.
+
+7. Estimate the frequency of actor mentions only after semantically consolidating equivalent names.
+
+8. For each actor, determine the achieved level of de-anonymization, ranging from an unidentified actor to a specific natural person, in accordance with the available evidential support.
+
+9. For each conclusion, preserve the sources used, the original linguistic forms, alternative interpretations, contradictions, and confidence assessment.
+
+10. Based on the assigned task, automatically determine the required analytical functions, generate a minimally sufficient swarm of virtual experts, justify the purpose of each agent, construct a structured AgentFlow workflow, and perform the analysis by generating canonical entities, attribution statements, and a dynamic semantic graph.
