@@ -1,31 +1,49 @@
 # Experimental Results
 
-This directory contains the outputs obtained from the experimental application of the proposed methodology to multilingual dynamic OSINT collections.
+This section presents representative examples of the proposed methodology applied to cyber threat intelligence analysis.
 
-## Result Types
+The examples illustrate semantic attribution graphs automatically generated from OSINT collections and demonstrate the construction of explainable semantic networks, attribution statements, and controlled de-anonymization.
 
-The experimental outputs include:
+The experimental RAG examples were obtained from weekly OSINT collections retrieved using the query **"cyber-attack"** from the **InfoStream** content monitoring system (http://infostream.ua).
 
-- canonicalized cyber threat actors;
-- alternative names, aliases, and multilingual entity variants;
+---
+
+# RAG Examples
+
+### Example 1
+
+*Semantic attribution graph generated from the first weekly RAG collection.*
+
+![RAG Example 1](../figures/result-rag1.png)
+
+---
+
+### Example 2
+
+*Semantic attribution graph generated from the second weekly RAG collection.*
+
+![RAG Example 2](../figures/result-rag2.png)
+
+---
+
+# BASE Example
+
+The following figure illustrates the methodology applied to a broader manually accumulated OSINT knowledge base without dynamic RAG retrieval.
+
+![BASE Example](../figures/result-base.png)
+
+---
+
+## Notes
+
+The figures are intended solely as representative examples of the proposed methodology.
+
+The complete experimental outputs additionally include:
+
+- canonical entities;
 - attribution statements;
-- identified incidents, targets, tools, malware, tactics, and organizations;
-- independent source-support assessments;
-- confidence and reliability indicators;
-- alternative hypotheses and contradictions;
-- controlled de-anonymization levels;
-- dynamic semantic graphs;
+- confidence estimates;
+- evidence provenance;
+- semantic graphs;
 - analytical reports;
-- network visualizations;
-- structured export files.
-
-## Reproducibility
-
-Where redistribution is permitted, the directory will preserve the relationship between:
-
-1. the input OSINT collection;
-2. the RAG context;
-3. the structured AgentFlow prompt;
-4. the execution results;
-5. the canonicalized entities and assertions;
-6. the resulting semantic graph and analytical report.
+- structured JSON results.
