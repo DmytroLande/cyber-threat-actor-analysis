@@ -1,0 +1,1232 @@
+# ============================================================
+# STRUCTURED AGENTFLOW PROMPT
+# ============================================================
+
+TYPE: SWARM
+NAME: dynamic_osint_cyber_actor_attribution_and_deanonymization
+VERSION: 1.0
+
+LANGUAGE_OF_ANALYSIS: Ukrainian
+LANGUAGE_OF_SOURCE_DOCUMENTS: English and any languages detected in the corpus
+
+# ============================================================
+# 1. GLOBAL TASK
+# ============================================================
+
+ROLE:
+Perform a comprehensive, evidence-based and explainable analysis of the
+dynamic OSINT collection RAG1-eng.docx in order to:
+
+1. detect explicit and implicit cyber threat actors;
+2. canonicalize their alternative names and descriptions;
+3. identify associated incidents, targets, tools, malware, infrastructure
+   and tactics, techniques and procedures;
+4. construct canonical attribution assertions;
+5. determine the epistemic status and evidential support of every assertion;
+6. separate independent sources from reprints and derivative publications;
+7. estimate entity significance only after canonicalization and source
+   deduplication;
+8. determine the achieved deanonymization level;
+9. construct an explainable semantic attribution graph;
+10. preserve complete source traceability and unresolved contradictions.
+
+# ============================================================
+# 2. INPUT
+# ============================================================
+
+INPUT_COLLECTION:
+    FILE: RAG1-eng.docx
+    TYPE: dynamic_OSINT_document_collection
+    ACCESS_MODE: semantic_RAG_retrieval
+    UNIT_OF_RETRIEVAL: document_segment
+    SOURCE_TRACEABILITY: mandatory
+
+PRIMARY_PROMPT:
+    The complete primary analytical prompt supplied by the user.
+
+SYSTEM_CONSTRAINTS:
+    - Do not use knowledge unsupported by the input collection unless it is
+      explicitly labeled as external knowledge.
+    - Do not invent actors, incidents, tools, sources, aliases or evidence.
+    - Do not equate repetition with independent confirmation.
+    - Do not equate information prominence with attribution reliability.
+    - Preserve modality and epistemic status.
+    - Do not merge entities of incompatible types.
+    - Do not deanonymize a person without sufficient independent evidence.
+    - Every analytical conclusion must contain source references.
+    - Contradictory statements must be preserved, not silently reconciled.
+    - Personal identification must be placed in expert review when evidence
+      is insufficient or disputed.
+
+# ============================================================
+# 3. EXPECTED GLOBAL OUTPUT
+# ============================================================
+
+OUTPUT_COMPONENTS:
+    1. task_analysis
+    2. generated_swarm_specification
+    3. primary_mentions_registry
+    4. canonical_entities_registry
+    5. canonical_assertions_registry
+    6. source_origin_clusters
+    7. entity_frequency_statistics
+    8. attribution_results
+    9. deanonymization_results
+    10. contradictions_and_alternative_hypotheses
+    11. semantic_graph
+    12. expert_review_queue
+    13. final_analytical_report
+
+OUTPUT_FORMAT:
+    JSON-compatible structured result plus a concise analytical report.
+
+# ============================================================
+# 4. TASK ANALYSIS
+# ============================================================
+
+LABEL TASK_ANALYSIS
+
+TYPE: AGENT
+ID: meta_agent_000
+ROLE:
+Analyze the primary prompt, the structure of RAG1-eng.docx and all system
+constraints; identify the analytical functions required to complete the task.
+
+STATE:
+    identified_functions = []
+    required_entity_types = []
+    required_assertion_types = []
+    required_specialists = []
+    risks = []
+    quality_criteria = []
+
+LOGIC:
+
+FUNCTION AnalyzePrimaryPrompt(PRIMARY_PROMPT):
+    Extract:
+        goals
+        input_requirements
+        entity_types
+        relation_types
+        evidence_requirements
+        epistemic_categories
+        deanonymization_requirements
+        graph_requirements
+        output_requirements
+        control_conditions
+    RETURN task_specification
+
+FUNCTION InspectCorpus(INPUT_COLLECTION):
+    Determine:
+        dominant languages
+        document structure
+        approximate topic distribution
+        occurrence of irrelevant documents
+        possible reprints
+        presence of official statements
+        presence of judicial or sanctions materials
+        presence of technical indicators
+        presence of named persons and organizations
+    RETURN corpus_profile
+
+CALL AnalyzePrimaryPrompt(PRIMARY_PROMPT) -> task_specification
+CALL InspectCorpus(INPUT_COLLECTION) -> corpus_profile
+
+IF corpus_profile contains non-cyber documents THEN:
+    ADD function thematic_filtering
+
+IF corpus_profile contains multilingual or variant names THEN:
+    ADD function multilingual_entity_canonicalization
+
+IF corpus_profile contains repeated publications THEN:
+    ADD function source_origin_analysis
+
+IF corpus_profile contains attribution claims THEN:
+    ADD function epistemic_and_attribution_control
+
+IF corpus_profile contains named persons THEN:
+    ADD function controlled_deanonymization
+
+IF technical indicators are present THEN:
+    ADD function technical_indicator_analysis
+
+SET identified_functions =
+    minimal set of analytical functions sufficient for the task
+
+SEND task_specification, corpus_profile, identified_functions
+TO swarm_designer_001
+
+# ============================================================
+# 5. AUTOMATIC SWARM DESIGN
+# ============================================================
+
+LABEL SWARM_DESIGN
+
+TYPE: AGENT
+ID: swarm_designer_001
+ROLE:
+Automatically generate the minimal sufficient swarm of virtual experts
+according to the task specification, corpus profile and system constraints.
+
+INPUT:
+    task_specification
+    corpus_profile
+    identified_functions
+
+STATE:
+    generated_agents = []
+    interaction_graph = {}
+    agent_dependencies = {}
+    justification_log = {}
+
+LOGIC:
+
+FUNCTION GenerateAgent(function):
+    DEFINE agent:
+        unique_ID
+        role
+        purpose
+        reason_for_creation
+        input_schema
+        output_schema
+        RAG_query_template
+        execution_logic
+        communication_rules
+        local_quality_metrics
+    RETURN agent
+
+FOR EACH function IN identified_functions:
+    CALL GenerateAgent(function)
+    ADD result TO generated_agents
+
+CONDITION:
+    The swarm must include only agents necessary for the current task.
+
+MANDATORY_CONTROL_ROLES:
+    - moderator
+    - critical_reviewer
+    - source_traceability_controller
+
+OPTIONAL_SPECIALIST_ROLES:
+    Create only when supported by the task or corpus:
+        thematic_filter
+        entity_extractor
+        implicit_actor_detector
+        multilingual_normalizer
+        entity_type_controller
+        incident_correlator
+        malware_and_tool_analyst
+        TTP_analyst
+        infrastructure_analyst
+        source_origin_analyst
+        epistemic_status_analyst
+        attribution_analyst
+        state_affiliation_analyst
+        legal_evidence_analyst
+        sanctions_and_indictment_analyst
+        deanonymization_analyst
+        contradiction_analyst
+        linguistic_canonicalization_agent
+        statistical_aggregation_agent
+        graph_builder
+
+FOR EACH generated agent:
+    RECORD:
+        reason_for_creation
+        role
+        assigned_task
+        input
+        expected_output
+        RAG_query
+        recipient_of_output
+        local_quality_criteria
+
+FUNCTION DesignCommunicationGraph(generated_agents):
+    Define:
+        data dependencies
+        parallel branches
+        merge points
+        review loops
+        escalation paths
+    RETURN interaction_graph
+
+CALL DesignCommunicationGraph(generated_agents)
+    -> interaction_graph
+
+OUTPUT swarm_specification:
+    generated_agents
+    interaction_graph
+    justification_log
+
+SEND swarm_specification TO moderator_900
+GOTO RAG_PLANNING
+
+# ============================================================
+# 6. RAG PLANNING
+# ============================================================
+
+LABEL RAG_PLANNING
+
+TYPE: FUNCTION
+NAME: BuildIndividualRAGContexts
+
+INPUT:
+    generated_agents
+    INPUT_COLLECTION
+    task_specification
+
+OUTPUT:
+    individual_RAG_contexts
+
+LOGIC:
+
+FOR EACH agent IN generated_agents:
+
+    FUNCTION BuildQuery(agent):
+        Use:
+            agent.role
+            agent.assigned_task
+            known entity candidates
+            unresolved questions
+            previous iteration results
+        Generate:
+            primary query
+            alternative query
+            contradiction query
+            source-origin query
+        RETURN query_set
+
+    CALL BuildQuery(agent) -> query_set
+
+    FOR EACH query IN query_set:
+        RETRIEVE TopK relevant segments FROM RAG1-eng.docx
+        PRESERVE:
+            document_ID
+            source_name
+            URL
+            publication_time
+            original_text
+            language
+            surrounding_context
+            retrieval_score
+
+    REMOVE exact duplicate segments
+    DO NOT remove semantically similar documents before source-origin analysis
+
+    ASSIGN resulting context TO agent
+
+RETURN individual_RAG_contexts
+
+# ============================================================
+# 7. AGENT TEMPLATES
+# ============================================================
+
+# Actual agents are instantiated dynamically by SWARM_DESIGN.
+# The following templates define their permitted behavior.
+
+# ------------------------------------------------------------
+# 7.1 THEMATIC FILTER
+# ------------------------------------------------------------
+
+TYPE: AGENT_TEMPLATE
+ROLE_TYPE: thematic_filter
+
+ROLE:
+Separate cyber-relevant segments from irrelevant, incidental or contextual
+mentions of cyber activity.
+
+LOGIC:
+    FOR EACH segment:
+        CLASSIFY as:
+            directly_relevant
+            contextually_relevant
+            weakly_relevant
+            irrelevant
+
+        IF segment describes:
+            cyber actor
+            cyber incident
+            malicious activity
+            attribution
+            malware
+            vulnerability exploitation
+            cyber infrastructure
+            sanctions or indictment related to cyber activity
+        THEN:
+            retain segment
+
+        ELSE IF “cyber”, “attack” or related terms are incidental:
+            mark irrelevant
+
+OUTPUT:
+    retained_segments
+    rejected_segments
+    rejection_reasons
+
+# ------------------------------------------------------------
+# 7.2 ENTITY EXTRACTION
+# ------------------------------------------------------------
+
+TYPE: AGENT_TEMPLATE
+ROLE_TYPE: entity_extractor
+
+ROLE:
+Extract explicit and implicit mentions of cyber threat actors and related
+entities.
+
+ENTITY_TYPES:
+    PERSON
+    HACKER_GROUP
+    ORGANIZATION
+    STATE
+    STATE_ORGANIZATION
+    UNKNOWN_ACTOR
+    AI_AGENT
+    CAMPAIGN
+    OPERATION
+    INCIDENT
+    TARGET
+    MALWARE
+    TOOL
+    INFRASTRUCTURE
+    VULNERABILITY
+    TTP
+    DOCUMENT
+    SOURCE
+
+LOGIC:
+    FOR EACH relevant segment:
+        EXTRACT all named and descriptive entities
+        RECORD exact original form
+        RECORD local context
+        RECORD entity type
+        RECORD explicit_or_implicit
+        RECORD source
+        RECORD agent confidence
+
+    DO NOT convert a campaign, malware family, tool or incident into an actor.
+
+OUTPUT_SCHEMA:
+    mention_ID
+    textual_form
+    entity_type
+    context
+    explicit_or_implicit
+    document_ID
+    source
+    confidence
+
+# ------------------------------------------------------------
+# 7.3 ENTITY TYPE CONTROLLER
+# ------------------------------------------------------------
+
+TYPE: AGENT_TEMPLATE
+ROLE_TYPE: entity_type_controller
+
+ROLE:
+Validate entity types and prevent semantic mixing.
+
+LOGIC:
+    FOR EACH extracted mention:
+        VERIFY type using:
+            grammatical context
+            semantic context
+            relations
+            incident participation
+            known labels in the corpus
+
+        IF incompatible type assignments exist:
+            preserve competing hypotheses
+            send to critical_reviewer
+
+OUTPUT:
+    validated_mentions
+    type_conflicts
+
+# ------------------------------------------------------------
+# 7.4 INCIDENT, TOOL AND TTP ANALYSIS
+# ------------------------------------------------------------
+
+TYPE: AGENT_TEMPLATE
+ROLE_TYPE: incident_and_TTP_analyst
+
+ROLE:
+Identify incidents, targets, tools, malware, infrastructure, vulnerabilities
+and TTP associated with each actor.
+
+LOGIC:
+    FOR EACH candidate actor:
+        EXTRACT:
+            incidents
+            campaigns
+            targets
+            victims
+            malware
+            tools
+            credentials
+            vulnerabilities
+            infrastructure
+            exploitation methods
+            persistence methods
+            delivery methods
+            command-and-control relations
+            publicly described TTP
+
+        PRESERVE evidence for each relation
+
+OUTPUT:
+    raw_actor_incident_relations
+    raw_actor_tool_relations
+    raw_actor_TTP_relations
+    unresolved_relations
+
+# ------------------------------------------------------------
+# 7.5 SOURCE ORIGIN ANALYSIS
+# ------------------------------------------------------------
+
+TYPE: AGENT_TEMPLATE
+ROLE_TYPE: source_origin_analyst
+
+ROLE:
+Separate independent reports from reprints, copied fragments and derivative
+publications.
+
+LOGIC:
+    FOR EACH pair of documents:
+        COMPARE:
+            textual similarity
+            identical quotations
+            publication time
+            explicit source references
+            shared uncommon formulations
+            identical factual errors
+            same sequence of claims
+
+    GROUP documents into origin clusters
+
+    FOR EACH cluster:
+        IDENTIFY:
+            probable primary source
+            direct reprints
+            partial reprints
+            derivative interpretations
+            independent confirmations
+
+OUTPUT:
+    source_clusters
+    probable_primary_sources
+    independent_source_count
+    dependency_confidence
+
+# ------------------------------------------------------------
+# 7.6 EPISTEMIC STATUS ANALYSIS
+# ------------------------------------------------------------
+
+TYPE: AGENT_TEMPLATE
+ROLE_TYPE: epistemic_status_analyst
+
+ROLE:
+Classify every attribution assertion according to its epistemic status.
+
+EPISTEMIC_STATUSES:
+    CONFIRMED_FACT
+    OFFICIAL_ATTRIBUTION
+    COURT_OR_INDICTMENT_ASSERTION
+    SANCTIONS_ASSERTION
+    CLAIM_OF_RESPONSIBILITY
+    EXPERT_ASSESSMENT
+    JOURNALISTIC_VERSION
+    HYPOTHESIS
+    DENIAL
+    CONTRADICTORY_ASSERTION
+    UNRESOLVED
+
+LOGIC:
+    FOR EACH raw assertion:
+        IDENTIFY assertion source
+        IDENTIFY linguistic modality
+        IDENTIFY evidential basis
+        ASSIGN epistemic status
+        PRESERVE original wording
+
+    NEVER merge:
+        “performed”
+        “probably performed”
+        “claimed responsibility”
+        “was accused of”
+        “denied involvement”
+
+OUTPUT:
+    epistemically_labeled_assertions
+
+# ------------------------------------------------------------
+# 7.7 ATTRIBUTION ANALYSIS
+# ------------------------------------------------------------
+
+TYPE: AGENT_TEMPLATE
+ROLE_TYPE: attribution_analyst
+
+ROLE:
+Evaluate attribution relations between actors, incidents, organizations,
+states, tools and infrastructure.
+
+LOGIC:
+    FOR EACH attribution assertion:
+        EVALUATE:
+            source independence
+            source reliability
+            official verification
+            technical consistency
+            linguistic consistency
+            temporal consistency
+            agent support
+            contradictions
+            possibility of false flag
+            non-uniqueness of TTP
+            circular citation
+
+        GENERATE at least one alternative hypothesis
+        when the assertion is not directly established by official evidence
+
+    DO NOT infer actor identity from TTP similarity alone.
+
+OUTPUT:
+    evaluated_attribution_assertions
+    alternative_hypotheses
+    contradiction_flags
+    confidence_components
+
+# ------------------------------------------------------------
+# 7.8 CONTROLLED DEANONYMIZATION
+# ------------------------------------------------------------
+
+TYPE: AGENT_TEMPLATE
+ROLE_TYPE: deanonymization_analyst
+
+ROLE:
+Determine the highest evidentially justified identification level.
+
+LEVELS:
+    L0 = unknown actor
+    L1 = alias, digital identity or identified hacker group
+    L2 = organizational or state affiliation
+    L3 = identified physical person
+
+LOGIC:
+    FOR EACH actor:
+        START level = L0
+
+        IF stable alias or group identity is supported:
+            level = L1
+
+        IF organizational or state affiliation has sufficient independent
+           and reliable support:
+            level = L2
+
+        IF a specific physical person is supported by:
+            court material
+            official indictment
+            sanctions document
+            law-enforcement statement
+            OR several independent authoritative sources
+        THEN:
+            level = L3
+        ELSE:
+            do not assign L3
+
+        IF personal identification is disputed:
+            ADD to expert_review_queue
+
+OUTPUT:
+    actor_ID
+    deanonymization_level
+    evidence
+    rejected_higher_levels
+    review_required
+
+# ------------------------------------------------------------
+# 7.9 CRITICAL REVIEWER
+# ------------------------------------------------------------
+
+TYPE: AGENT_TEMPLATE
+ROLE_TYPE: critical_reviewer
+
+ROLE:
+Search for errors, unsupported mergers, false attribution, circular citation,
+missing alternatives and inconsistent evidence.
+
+LOGIC:
+    REVIEW:
+        entity type assignments
+        canonicalization clusters
+        source-origin clusters
+        attribution assertions
+        deanonymization levels
+        graph relations
+
+    FOR EACH high-impact conclusion:
+        TRY to falsify it
+        SEARCH for contradictory evidence
+        CHECK whether all supporting sources derive from one origin
+        CHECK whether a less specific conclusion is better justified
+
+OUTPUT:
+    confirmed_items
+    challenged_items
+    required_corrections
+    unresolved_conflicts
+
+# ============================================================
+# 8. MULTIPLE SWARM EXECUTION
+# ============================================================
+
+LABEL SWARM_EXECUTION
+
+EXECUTION_PARAMETERS:
+    MIN_RUNS_PER_AGENT: 3
+    MAX_RUNS_PER_AGENT: 7
+    VARY:
+        RAG context composition
+        document order
+        retrieval query formulation
+        role emphasis
+        generation parameters
+    PRESERVE:
+        model identifier
+        run identifier
+        prompt version
+        retrieved sources
+
+START_PARALLEL(generated_agents)
+
+FOR EACH agent IN generated_agents:
+
+    LOOP K_agent TIMES:
+
+        CALL BuildIndividualRAGContexts(agent)
+            -> current_context
+
+        EXECUTE agent WITH current_context
+            -> agent_output
+
+        VALIDATE output schema
+
+        IF output invalid:
+            RETRY once with schema correction instruction
+
+        STORE:
+            run_ID
+            agent_ID
+            agent_output
+            evidence
+            source list
+            local confidence
+
+    END_LOOP
+
+END_FOR
+
+MERGE_RESULTS(all_agent_outputs)
+    -> raw_integrated_results
+
+# ============================================================
+# 9. MENTION CANONICALIZATION
+# ============================================================
+
+LABEL MENTION_CANONICALIZATION
+
+INPUT:
+    all extracted mentions
+
+MENTION_MODEL:
+    m_k = <textual_form, local_context, document, detecting_agent>
+
+SIMILARITY_COMPONENTS:
+    lexical_similarity
+    embedding_similarity
+    contextual_similarity
+    relational_similarity
+    temporal_similarity
+    type_compatibility
+
+LOGIC:
+
+FOR EACH pair of mentions m_i, m_j:
+
+    CALCULATE integrated similarity S_M(m_i,m_j)
+
+    IF:
+        S_M >= entity_similarity_threshold
+        AND entity_types are compatible
+        AND incident contexts do not contradict identity
+        AND temporal context is compatible
+        AND semantic neighborhoods are compatible
+    THEN:
+        assign to same candidate canonical cluster
+    ELSE:
+        keep separate
+
+FOR EACH candidate cluster:
+    CALL critical_reviewer
+    CHECK false_merge risk
+    CHECK false_split risk
+
+SELECT canonical name using:
+    officiality
+    source authority
+    usage frequency
+    stability
+    linguistic normativity
+
+PRESERVE:
+    all aliases
+    original linguistic forms
+    source occurrences
+    agent occurrences
+    rejected merges
+
+OUTPUT:
+    canonical_entities
+    alias_mapping
+    merge_justifications
+    unresolved_entity_clusters
+
+# ============================================================
+# 10. ASSERTION CANONICALIZATION
+# ============================================================
+
+LABEL ASSERTION_CANONICALIZATION
+
+ASSERTION_MODEL:
+    r_k = <subject, predicate, object, modality,
+           epistemic_status, evidence>
+
+LOGIC:
+
+FOR EACH pair of assertions r_i, r_j:
+
+    COMPARE:
+        canonical subjects
+        normalized predicates
+        canonical objects
+        contexts
+        modalities
+        epistemic statuses
+
+    IF semantic content is equivalent
+       AND modality is compatible
+       AND epistemic status is compatible:
+        merge into one canonical assertion class
+    ELSE:
+        keep separate
+
+NEVER merge:
+    direct fact WITH hypothesis
+    official attribution WITH journalistic version
+    claim of responsibility WITH independently verified responsibility
+    attribution WITH denial
+
+OUTPUT:
+    canonical_assertions
+    assertion_variants
+    epistemic_subclasses
+    contradictory_assertion_sets
+
+# ============================================================
+# 11. SOURCE DEDUPLICATION
+# ============================================================
+
+LABEL SOURCE_DEDUPLICATION
+
+CALL source_origin_analyst
+    WITH all documents supporting each canonical assertion
+
+FOR EACH canonical assertion:
+    CALCULATE:
+        total_mentions
+        document_count
+        source_count
+        independent_origin_cluster_count
+
+SET:
+    one origin cluster = one independent informational confirmation
+
+OUTPUT:
+    deduplicated_evidence_structure
+
+# ============================================================
+# 12. LINGUO-STATISTICAL AGGREGATION
+# ============================================================
+
+LABEL STATISTICAL_AGGREGATION
+
+FOR EACH canonical entity e:
+
+    CALCULATE:
+        TF(e)       = total canonicalized mentions
+        DF(e)       = distinct documents
+        SF(e)       = distinct named sources
+        IF(e)       = independent origin clusters
+        AF(e)       = agents supporting the entity
+        AF_eff(e)   = effective agent support adjusted for dependence
+        TF_t(e)     = time-weighted mention frequency
+
+    NORMALIZE indicators
+
+    CALCULATE:
+        Z(e) =
+            w1*TF_normalized
+          + w2*DF_normalized
+          + w3*IF_normalized
+          + w4*AF_eff_normalized
+          + w5*TF_t_normalized
+
+FOR EACH canonical assertion rho:
+
+    CALCULATE:
+        IF(rho)
+        AF_eff(rho)
+        LC(rho) = linguistic consistency
+        SR(rho) = source reliability
+        OV(rho) = official verification
+        TC(rho) = technical consistency
+        CF(rho) = contradiction factor
+
+    CALCULATE:
+        Q(rho) =
+            omega1*IF_normalized
+          + omega2*AF_eff_normalized
+          + omega3*LC
+          + omega4*SR
+          + omega5*OV
+          + omega6*TC
+          - omega7*CF
+
+CONSTRAINT:
+    Z(e) measures information prominence.
+    Q(rho) measures evidential reliability.
+    Never substitute one for the other.
+
+OUTPUT:
+    entity_statistics
+    assertion_reliability_scores
+
+# ============================================================
+# 13. ATTRIBUTION CONTROL
+# ============================================================
+
+LABEL ATTRIBUTION_CONTROL
+
+FOR EACH high-impact canonical assertion:
+
+    CALL attribution_analyst
+    CALL critical_reviewer
+
+    IF official or judicial support exists:
+        preserve corresponding epistemic status
+
+    IF only repeated media reports exist:
+        lower independent support
+
+    IF TTP similarity is the primary basis:
+        flag non_unique_TTP
+
+    IF multiple sources cite one initial assertion:
+        flag circular_citation
+
+    IF credible contradiction exists:
+        preserve both versions
+        lower Q
+        add to expert_review_queue when necessary
+
+OUTPUT:
+    controlled_attribution_registry
+
+# ============================================================
+# 14. DEANONYMIZATION CONTROL
+# ============================================================
+
+LABEL DEANONYMIZATION_CONTROL
+
+CALL deanonymization_analyst
+    FOR EACH canonical actor
+
+IF assigned level = L3:
+    REQUIRE:
+        explicit evidence
+        independent source support
+        no unresolved identity conflict
+
+IF requirements not satisfied:
+    downgrade level
+    record rejected transition
+    add to expert_review_queue
+
+OUTPUT:
+    controlled_deanonymization_registry
+
+# ============================================================
+# 15. SEMANTIC GRAPH CONSTRUCTION
+# ============================================================
+
+LABEL GRAPH_CONSTRUCTION
+
+NODE_TYPES:
+    ACTOR
+    PERSON
+    HACKER_GROUP
+    ORGANIZATION
+    STATE
+    STATE_ORGANIZATION
+    AI_AGENT
+    CAMPAIGN
+    OPERATION
+    INCIDENT
+    TARGET
+    MALWARE
+    TOOL
+    TTP
+    INFRASTRUCTURE
+    VULNERABILITY
+    DOCUMENT
+    SOURCE
+
+EDGE_TYPES:
+    ALIAS_OF
+    CLAIMED
+    ATTRIBUTED_TO
+    POSSIBLY_ATTRIBUTED_TO
+    ASSOCIATED_WITH
+    AFFILIATED_WITH
+    MEMBER_OF
+    PARTICIPATED_IN
+    CONDUCTED
+    TARGETED
+    USED
+    EXPLOITED
+    CONNECTED_TO
+    CONFIRMS
+    CONTRADICTS
+    DERIVED_FROM
+    REPORTED_BY
+
+FOR EACH canonical entity:
+    CREATE graph node
+
+FOR EACH canonical assertion:
+    CREATE graph edge
+    ATTACH:
+        Q score
+        epistemic status
+        modality
+        evidence excerpts
+        supporting documents
+        independent source count
+        supporting agents
+        temporal interval
+        alternative hypotheses
+        contradiction flags
+
+FOR EACH actor node:
+    ATTACH:
+        aliases
+        entity type
+        Z score
+        deanonymization level
+
+OUTPUT:
+    semantic_graph_JSON
+    nodes_table
+    edges_table
+    GraphML_or_GEXF_ready_representation
+
+# ============================================================
+# 16. QUALITY CONTROL AND SUPERCYCLE
+# ============================================================
+
+LABEL QUALITY_CONTROL
+
+QUALITY_METRICS:
+    entity_completeness
+    entity_set_stability
+    assertion_set_stability
+    evidence_completeness
+    canonicalization_quality
+    source_traceability
+    contradiction_visibility
+    expert_review_volume
+
+CALCULATE:
+    Delta_E = change in canonical entity set between iterations
+    Delta_R = change in canonical assertion set between iterations
+    EC      = proportion of canonical assertions with identifiable,
+              verifiable evidence
+
+CONDITION:
+
+IF:
+    Delta_E < theta_E
+    AND Delta_R < theta_R
+    AND EC >= theta_C
+    AND no critical schema errors
+THEN:
+    GOTO FINAL_RESULT
+
+ELSE:
+    IDENTIFY unresolved causes
+
+    IF missing entities:
+        refine entity RAG queries
+
+    IF unstable aliases:
+        rerun canonicalization with stricter type and context controls
+
+    IF low evidence completeness:
+        expand source-oriented RAG retrieval
+
+    IF excessive contradictions:
+        create additional critic or specialist agent
+
+    IF personal identification is unstable:
+        downgrade deanonymization level and require expert review
+
+    GOTO RAG_PLANNING
+
+# ============================================================
+# 17. FINAL RESULT
+# ============================================================
+
+LABEL FINAL_RESULT
+
+TYPE: AGENT
+ID: moderator_900
+ROLE:
+Integrate all validated outputs into a transparent and reproducible final
+analytical result.
+
+REQUIRED_OUTPUT_JSON:
+
+{
+  "task_analysis": {
+    "corpus": "RAG1-eng.docx",
+    "identified_functions": [],
+    "limitations": []
+  },
+
+  "generated_swarm": [
+    {
+      "agent_id": "",
+      "role": "",
+      "reason_for_creation": "",
+      "task": "",
+      "RAG_query": "",
+      "inputs": [],
+      "outputs": [],
+      "recipients": []
+    }
+  ],
+
+  "canonical_entities": [
+    {
+      "entity_id": "",
+      "canonical_name": "",
+      "entity_type": "",
+      "aliases": [],
+      "original_forms": [],
+      "contexts": [],
+      "documents": [],
+      "sources": [],
+      "TF": 0,
+      "DF": 0,
+      "SF": 0,
+      "IF": 0,
+      "AF": 0,
+      "AF_eff": 0.0,
+      "TF_t": 0.0,
+      "Z": 0.0,
+      "deanonymization_level": "L0|L1|L2|L3",
+      "confidence": 0.0
+    }
+  ],
+
+  "canonical_assertions": [
+    {
+      "assertion_id": "",
+      "subject": "",
+      "predicate": "",
+      "object": "",
+      "modality": "",
+      "epistemic_status": "",
+      "evidence_fragments": [],
+      "documents": [],
+      "sources": [],
+      "source_origin_clusters": [],
+      "independent_confirmations": 0,
+      "supporting_agents": [],
+      "alternative_hypotheses": [],
+      "contradictions": [],
+      "Q": 0.0
+    }
+  ],
+
+  "source_clusters": [
+    {
+      "cluster_id": "",
+      "probable_primary_source": "",
+      "documents": [],
+      "dependency_type": "",
+      "independence_confidence": 0.0
+    }
+  ],
+
+  "attribution_results": [],
+
+  "deanonymization_results": [],
+
+  "semantic_graph": {
+    "nodes": [],
+    "edges": []
+  },
+
+  "expert_review_queue": [
+    {
+      "object_id": "",
+      "object_type": "",
+      "reason": "",
+      "conflicting_evidence": [],
+      "recommended_action": ""
+    }
+  ],
+
+  "quality_control": {
+    "iterations": 0,
+    "Delta_E": 0.0,
+    "Delta_R": 0.0,
+    "evidence_completeness": 0.0,
+    "termination_reason": ""
+  },
+
+  "analytical_conclusions": []
+}
+
+FINAL_INSTRUCTIONS:
+
+1. Execute every agent role sequentially or through simulated parallel
+   branches as defined above.
+2. Do not reproduce this prompt in the answer.
+3. Return only the completed structured result and analytical report.
+4. Clearly distinguish:
+       facts,
+       official attributions,
+       claims,
+       expert assessments,
+       journalistic interpretations,
+       hypotheses,
+       denials.
+5. Every conclusion must be traceable to RAG1-eng.docx.
+6. State explicitly when the available corpus does not support a conclusion.
+7. Do not present an L3 personal identification as established when the
+   evidential transition requirements are not met.
+
+EXECUTE.
+
