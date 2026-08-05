@@ -2,6 +2,26 @@
 
 **Research Repository**
 ![Overall architecture of the methodology](figures/Overall_architecture_of_the_methodology.png)
+
+---
+
+## Repository Navigation
+
+### [Methodology](methodology/)
+Public methodological abstract, research scope, principal concepts, and publication status.
+
+### [Scientific Foundations](scientific-foundations/)
+Previously published research on AgentFlow, large agent prompts, virtual expert swarms, RAG, semantic networks, knowledge graphs, and explainable analysis.
+
+### [Structured Agent Prompts](prompts/)
+No-code AgentFlow prompts, reusable prompt components, agent roles, execution logic, and output schemas.
+
+### [Experimental OSINT Datasets](datasets/)
+English- and Ukrainian-language weekly OSINT collections used as dynamic RAG contexts.
+
+### [Experimental Results](results/)
+Analytical reports, canonical entities and assertions, semantic graphs, evidence assessments, and network visualizations.
+
 This repository presents an explainable agent-based methodology for transforming dynamic multilingual OSINT collections into structured cyber threat intelligence through automatic AgentFlow workflow generation, adaptive virtual expert swarms, Retrieval-Augmented Generation (RAG), semantic canonicalization, attribution control, and dynamic semantic graph construction.
 
 Unlike conventional prompt engineering or predefined multi-agent systems, the proposed methodology automatically transforms a declarative analytical prompt into an executable AgentFlow scenario, generates the required set of specialized agents, performs repeated RAG-based analyses, canonicalizes extracted entities and attribution statements, aggregates evidence using linguo-statistical methods, and produces an explainable semantic representation of cyber threat actors and their relationships.
