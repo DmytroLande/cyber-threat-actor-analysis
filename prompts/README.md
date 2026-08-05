@@ -1,28 +1,64 @@
 # Structured Agent Prompts
 
-This directory is intended for structured no-code agent prompts based on the AgentFlow approach.
+This directory documents the prompt transformation stage of the proposed methodology.
 
-The prompts use natural-language control primitives to specify analytical procedures, including:
+Unlike conventional prompt engineering, the methodology automatically transforms an initial analytical request into a structured executable AgentFlow scenario.
 
-- task decomposition;
-- conditional execution;
-- iterative processing;
-- parallel agent execution;
-- role assignment;
-- evidence verification;
-- result integration;
-- Supercycle-based refinement;
-- structured output generation.
+The transformation is performed using the published AgentFlow framework.
 
-## Planned Contents
+## Workflow
 
-The directory will include:
+Primary Analytical Prompt
 
-- the primary analytical prompt;
-- the generated structured AgentFlow prompt;
-- reusable prompt components;
-- agent role specifications;
-- output schemas;
-- execution examples.
+↓
 
-Some prompt materials will be made available after the associated methodology has been officially published.
+AgentFlow Framework
+
+↓
+
+Structured Agentic Prompt
+
+↓
+
+Execution by the Virtual Expert Swarm
+
+↓
+
+Semantic Graph Construction
+
+---
+
+## Directory Structure
+
+### input/
+
+Contains the original analytical task formulated by the researcher.
+
+Current file:
+
+- first_prompt.txt
+
+This prompt specifies the analytical objectives without defining the execution strategy.
+
+---
+
+### generated/
+
+Contains the structured AgentFlow prompt automatically generated from the primary prompt.
+
+Current file:
+
+- agentic_prompt.txt
+
+The generated prompt explicitly defines:
+
+- analytical functions;
+- virtual expert roles;
+- execution order;
+- iterative procedures;
+- data flow;
+- output schemas.
+
+---
+
+The AgentFlow framework responsible for this transformation is described in the publications listed in the **Scientific Foundations** section of this repository.
