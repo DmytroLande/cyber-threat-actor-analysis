@@ -47,3 +47,13 @@ The complete experimental outputs additionally include:
 - semantic graphs;
 - analytical reports;
 - structured JSON results.
+
+---
+
+## Complete Analysis Package
+
+The complete representative output of the AgentFlow-based analysis of the `RAG1-eng` dynamic OSINT collection is available as a single downloadable archive:
+
+[Download RAG1 AgentFlow Analysis Package](RAG1-AgentFlow-Analysis-Full.zip)
+
+The archive contains the full analytical report in PDF and Markdown formats, a concise executive report, the structured JSON result, and semantic graph files in GraphML and GEXF formats. It is provided as a reproducible example of the methodology’s output structure, including canonical entities, attribution assertions, source-origin clusters, controlled de-anonymization results, contradictions, expert-review items, and semantic graph relations.
